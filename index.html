@@ -12,17 +12,54 @@
         <p>can a computer vision model categorize chess puzzles without knowing how to play?</p>
         <p>if so, it could reveal visual clues for stronger chess intuition.</p>
         <p>
-          turns out it can't 🤷‍♂️
+          current thought is that it can't 🤷‍♂️
         </p>
+        <p>benchmarks indicate results not significantly better than chance</p>
       </section>
       <section>
         <h2>demo</h2>
         <form action="http://127.0.0.1:10101/predict" method="POST" enctype="multipart/form-data">
           <label for="image">image of a chess puzzle:</label>
-          <input type="file" id="image" name="image" accept="image/*" required>
-          <button type="submit">Predict</button>
+          <input type="file" id="imageInput" name="image" accept="image/*" required>
         </form>
+        <img id="preview" style="display: none; max-width: 200px;"></img>
+        <div id="results" style="display: none; max-width: 200px;"></img>
       </section> 
     </div>
+
+    <script type="text/javascript">
+      imageInput.addEventListener('change', async () => {
+        const endpoint = "http://127.0.0.1:10101/predict"
+
+        const formData = new FormData()
+        const file = imageInput.files[0]
+        formData.append("image", file)
+
+        const req = { method: "POST", body: formData }
+        const res = await fetch(endpoint, req)
+        if (!res.ok) alert(await res.json())
+
+        preview.src = URL.createObjectURL(file)
+        preview.onload = () => URL.revokeObjectURL(preview.src)
+        preview.style.display = 'block'
+
+        function registerResults({ cat, vocab, confidences })  {
+          const pct = c => (c*100).toFixed(2)
+          const fmt = `
+            <p>prediction: <strong>${cat}</strong></p>
+            <p>confidences:</p>
+            <ul>${confidences.map((c, i) => {
+              return `<li>${vocab[i]}: ${pct(c)}%</li>`
+            }).join("\n")}
+            </ul>
+          `
+
+          results.innerHTML = fmt
+          results.style.display = "block"
+        }
+        registerResults(await res.json())
+
+      })
+    </script>
   </body>
 </html>
