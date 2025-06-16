@@ -15,6 +15,14 @@
           turns out it can't 🤷‍♂️
         </p>
       </section>
+      <section>
+        <h2>demo</h2>
+        <form action="http://127.0.0.1:10101/predict" method="POST" enctype="multipart/form-data">
+          <label for="image">image of a chess puzzle:</label>
+          <input type="file" id="image" name="image" accept="image/*" required>
+          <button type="submit">Predict</button>
+        </form>
+      </section> 
     </div>
   </body>
 </html>

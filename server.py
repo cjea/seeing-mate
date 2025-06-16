@@ -8,7 +8,8 @@ def info(msg):
 # from fastai.vision.all import load_learner
 
 import IPython
-from fastapi import FastAPI, Request, UploadFile
+from fastapi import FastAPI, Request, File, UploadFile
+from fastapi.responses import FileResponse
 
 api = FastAPI()
 
@@ -16,9 +17,17 @@ api = FastAPI()
 def ok_200():
     return "ok"
 
+@api.get('/index.html')
+def index_html():
+  return FileResponse("index.html")
+
+@api.get('/style.css')
+def style_css():
+  return FileResponse("style.css")
+
 
 @api.post('/predict')
-def predict_img(request: Request):
+def predict_img(request: Request, image: UploadFile=File(...)):
   print(f'predict_img')
-  IPython.embed()
+  # IPython.embed()
   return 200
