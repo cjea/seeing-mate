@@ -1,13 +1,13 @@
 import time
 
 def info(msg):
+  return None
   print(f'{time.ctime()} {msg}')
 
 info("Importing packages.")
 from pathlib import Path
 from fastai.vision.all import L, load_learner, PILImage, Resize
 
-# import IPython
 from fastapi import FastAPI, Request, File, UploadFile
 from fastapi.responses import FileResponse
 
@@ -28,12 +28,10 @@ def style_css():
 
 
 @api.post('/predict')
-def predict_img(request: Request, image: UploadFile=File(...)):
-  print(f'predict_img')
+def predict_img(image: UploadFile=File(...)):
+  pil = PILImage.create(image.file)
   normal = Resize(224)
-  pil = normal(PILImage.create(image.file))
-  # IPython.embed()
-  results = learner.predict(pil)
+  results = learner.predict(normal(pil))
 
   return {
       "cat": results[0]
