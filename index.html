@@ -18,7 +18,7 @@
       </section>
       <section>
         <h2>demo</h2>
-        <form action="http://127.0.0.1:10101/predict" method="POST" enctype="multipart/form-data">
+        <form>
           <label for="image">image of a chess puzzle:</label>
           <input type="file" id="imageInput" name="image" accept="image/*" required>
         </form>
@@ -29,7 +29,7 @@
 
     <script type="text/javascript">
       imageInput.addEventListener('change', async () => {
-        const endpoint = "http://127.0.0.1:10101/predict"
+        const endpoint = "/predict"
 
         const formData = new FormData()
         const file = imageInput.files[0]

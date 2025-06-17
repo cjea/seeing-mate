@@ -1,6 +1,15 @@
+# local
+
 ```
-$ ./dev
+$ ./bin/dev
 ```
 
-# TODO
-- deploy via cloudflare to https://fastai.2.2550gg.com
+# prod
+## upload to digital ocean
+```sh
+$ ./upload
+```
+
+## run
+
+ssh on and run bin/prod

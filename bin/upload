@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+set -euxo pipefail
+
+APP_PATH=/Users/babe/code/fastai_course/seeing-mates/app
+DEST_PATH=root@mate:/usr/src/mate
+
+main() {
+  ssh root@mate 'mkdir -p /usr/src/mate' ;
+
+  (
+    cd "$APP_PATH";
+    rsync -arvhP                                    \
+      --exclude "*.git*" --exclude "*__pycache__*"  \
+      "$APP_PATH/" "$DEST_PATH" ;
+  ) ;
+
+  ssh root@mate "/usr/src/mate/bin/install" ;
+}
+
+main "$@" ;

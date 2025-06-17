@@ -15,6 +15,7 @@ learner = load_learner("model.pkl")
 def ok_200():
     return "ok"
 
+@api.get('/')
 @api.get('/index.html')
 def index_html():
   return FileResponse("index.html")

@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 set -euxo pipefail
 
+PORT=${PORT:-80};
+
 main() {
-  fastapi run server.py --port 10101 ;
+  fastapi run server.py --port "$PORT" ;
 }
 
 main "$@" ;
