@@ -1,15 +1,12 @@
 import time
+from pathlib import Path
+from fastai.vision.all import L, load_learner, PILImage, Resize
+from fastapi import FastAPI, Request, File, UploadFile
+from fastapi.responses import FileResponse
 
 def info(msg):
   return None
   print(f'{time.ctime()} {msg}')
-
-info("Importing packages.")
-from pathlib import Path
-from fastai.vision.all import L, load_learner, PILImage, Resize
-
-from fastapi import FastAPI, Request, File, UploadFile
-from fastapi.responses import FileResponse
 
 api = FastAPI()
 learner = load_learner("model.pkl")
